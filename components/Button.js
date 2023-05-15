@@ -11,6 +11,14 @@ align-items:center;
 svg{
     height:16px
 }
+${props=>props.black && css`
+background-color:black;
+color:#fff;
+`}
+${props=>props.block && css`
+display: block;
+width:100%;
+`}
 
 ${props=>props.primary && !props.outline &&css`
 background-color:#5542f6;
