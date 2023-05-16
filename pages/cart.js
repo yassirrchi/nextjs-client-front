@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import { CartContext } from "@/components/CartContext";
 import Center from "@/components/Center";
 import Header from "@/components/Header";
+import Input from "@/components/Input";
 import Table from "@/components/Table";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -44,9 +45,19 @@ align-items:center;
 justify-content:center;
 
 `
+const CityHolder=styled.div`
+display:flex;
+gap:5px;`
 export default function CartPage(){
     const {cartProducts,addProduct,removeProduct}=useContext(CartContext)
     const [products,setProducts]=useState([])
+    const[name,setName]=useState("");
+    const[email,setEmail]=useState("");
+    const[city,setCity]=useState("");
+    const[postalCode,setPostalCode]=useState("");
+    const[streetAddress,setStreetAddress]=useState("");
+    const[country,setCountry]=useState("");
+
     useEffect(()=>{
         if(cartProducts.length>0){
             axios.post('/api/cart',{ids:cartProducts})
@@ -62,6 +73,11 @@ export default function CartPage(){
     }
     function removeOneOfThis(productId){
         removeProduct(productId)
+    }
+    let total=0;
+    for(const productId of cartProducts){
+        const price=products.find(p=>p._id===productId)?.price||0;
+        total+=price;
     }
      
     return(<>
@@ -100,7 +116,7 @@ export default function CartPage(){
 
 
 
-                     
+                     <tr><td></td><td></td><td>${total}</td></tr>
                 
 
             </tbody>
@@ -112,7 +128,19 @@ export default function CartPage(){
 
     </Box>
     {!!cartProducts?.length&&(
-    <Box><h2>Order Information</h2><Button black block>Continue to checkout</Button></Box>
+    <Box>
+        <h2>Order Information</h2>
+        <Input type="text" placeholder="Name" value={name} onChange={ev=>setName(ev.target.value)} />
+        <Input type="text" placeholder="Email" value={email} onChange={ev=>setEmail(ev.target.value)}/>
+        <CityHolder>
+        <Input type="text" placeholder="City" value={city} onChange={ev=>setCity(ev.target.value)}/>
+        <Input type="text" placeholder="Postal Code" value={postalCode} onChange={ev=>setPostalCode(ev.target.value)}/>
+        </CityHolder>
+        <Input type="text" placeholder="Street Code"/>
+        <Input type="text" placeholder="Country" value={country} onChange={ev=>setCountry(ev.target.value)}/>
+
+        <Button black block>Continue to checkout</Button>
+    </Box>
 
     )}
     </ColumnWrapper>
