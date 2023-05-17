@@ -130,16 +130,19 @@ export default function CartPage(){
     {!!cartProducts?.length&&(
     <Box>
         <h2>Order Information</h2>
-        <Input type="text" placeholder="Name" value={name} onChange={ev=>setName(ev.target.value)} />
-        <Input type="text" placeholder="Email" value={email} onChange={ev=>setEmail(ev.target.value)}/>
+        <form method="post" action="/api/checkout">
+        <Input type="text" placeholder="Name" name="name" value={name} onChange={ev=>setName(ev.target.value)} />
+        <Input type="text" placeholder="Email" name="email" value={email} onChange={ev=>setEmail(ev.target.value)}/>
         <CityHolder>
-        <Input type="text" placeholder="City" value={city} onChange={ev=>setCity(ev.target.value)}/>
-        <Input type="text" placeholder="Postal Code" value={postalCode} onChange={ev=>setPostalCode(ev.target.value)}/>
+        <Input type="text" placeholder="City" name="city" value={city} onChange={ev=>setCity(ev.target.value)}/>
+        <Input type="text" placeholder="Postal Code" name="postalCode" value={postalCode} onChange={ev=>setPostalCode(ev.target.value)}/>
         </CityHolder>
-        <Input type="text" placeholder="Street Code"/>
-        <Input type="text" placeholder="Country" value={country} onChange={ev=>setCountry(ev.target.value)}/>
+        <Input type="text" name="streetAddress" placeholder="Street Address"/>
+        <Input type="text" name="country" placeholder="Country" value={country} onChange={ev=>setCountry(ev.target.value)}/>
+        <Input type="hidden" name="products"   value={cartProducts.join(',')}/>
 
-        <Button black block>Continue to checkout</Button>
+        <Button black block type="submit">Continue to checkout</Button>
+        </form>
     </Box>
 
     )}
