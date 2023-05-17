@@ -67,6 +67,12 @@ export default function CartPage(){
 
         }
     },[cartProducts])
+    
+
+    function clearCart(){
+        //do it after checkout
+    }
+
     function addMoreOfThis(productId){
         addProduct(productId)
         
@@ -74,10 +80,34 @@ export default function CartPage(){
     function removeOneOfThis(productId){
         removeProduct(productId)
     }
+    async function goToPayment(){
+        const response=await axios.post("/api/checkout",{
+            name,email,city,postalCode,streetAddress,country,
+            cartProducts
+        })
+        if(response.data.url){
+            window.location=response.data.url
+        }
+    }
     let total=0;
     for(const productId of cartProducts){
         const price=products.find(p=>p._id===productId)?.price||0;
         total+=price;
+    }
+    if(window.location.href.includes("success")){
+        return (<>
+        <Header>
+            <ColumnWrapper>
+            <Center>
+                <Box>
+                <h1>Thanks for your order</h1>
+                <p>we will email you l</p>
+                </Box>
+            </Center>
+            </ColumnWrapper>
+        </Header>
+        
+        </>)
     }
      
     return(<>
@@ -130,7 +160,7 @@ export default function CartPage(){
     {!!cartProducts?.length&&(
     <Box>
         <h2>Order Information</h2>
-        <form method="post" action="/api/checkout">
+         
         <Input type="text" placeholder="Name" name="name" value={name} onChange={ev=>setName(ev.target.value)} />
         <Input type="text" placeholder="Email" name="email" value={email} onChange={ev=>setEmail(ev.target.value)}/>
         <CityHolder>
@@ -139,10 +169,10 @@ export default function CartPage(){
         </CityHolder>
         <Input type="text" name="streetAddress" placeholder="Street Address"/>
         <Input type="text" name="country" placeholder="Country" value={country} onChange={ev=>setCountry(ev.target.value)}/>
-        <Input type="hidden" name="products"   value={cartProducts.join(',')}/>
+         
 
-        <Button black block type="submit">Continue to checkout</Button>
-        </form>
+        <Button black block  onClick={goToPayment}>Continue to checkout</Button>
+         
     </Box>
 
     )}
