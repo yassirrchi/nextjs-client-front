@@ -4,10 +4,14 @@ import ProductBox from "./ProductBox"
 
 const ProductGrid=styled.div`
 display: grid;
-grid-template-columns: 1fr 1fr 1fr 1fr;
+grid-template-columns: 1fr 1fr;
 gap:30px;
-padding-top:20px 
-;
+padding-top:20px;
+@media screen and (min-width:768px){
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+}
+
 `
 const Title=styled.h2`
 font-weight:400;

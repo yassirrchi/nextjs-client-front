@@ -30,14 +30,25 @@ const ProductInfoBox=styled.div`
 margin-top:10px
 `
 const PriceRow=styled.div`
+display:block;
+@media screen and (min-width:768px){
 display:flex;
+
+}
 align-items:center;
 justify-content:space-between;
 margin-top:2px
 `
 const Price=styled.div`
-font-size:1.5rem;
+font-size:1rem;
 font-weight:bold;
+text-align:right;
+@media screen and (min-width:768px){
+    font-size:1.5rem;
+    text-align:left;
+    
+    
+    }
 `
 export default function ProductBox({_id,title,description,images,price}){
     const{addProduct}= useContext(CartContext)
