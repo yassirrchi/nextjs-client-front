@@ -104,7 +104,7 @@ export default function CartPage(){
             <Center>
                 <Box>
                 <h1>Thanks for your order</h1>
-                <p>we will email you l</p>
+                <p>we will email you later</p>
                 </Box>
             </Center>
             </ColumnWrapper>

@@ -21,7 +21,7 @@ export default function ProductsPage({products}){
         <Header/>
         <Center>
          <Title>All products</Title>   
-         {products.length}
+          
          <ProductsGrid products={...products}/>
         </Center>
         
